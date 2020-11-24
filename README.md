@@ -2,6 +2,6 @@
  Some useful information related with Node.js. 
 
 ## Overview
-* [Promises, async/await](#Promises-async-await)
+* [Promises, async/await](#promises-asyncawait)
 
 ## Promises, async/await
