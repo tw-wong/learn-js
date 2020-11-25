@@ -1,4 +1,4 @@
-# learn-nodejs
+# learn-js
  Some useful information related with js. 
 
 ## Overview
