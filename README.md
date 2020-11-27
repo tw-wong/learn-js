@@ -3,6 +3,14 @@
 
 ## Overview
 * [Promise](#promise)
+* [Promise then, catch, finally](#promise-then-catch-finally)
+* [Promise chaining](#promise-chaining)
+* [Returning a Promise](#returning-a-promise)
+* [Promise.race](#promiserace)
+* [Promise.all](#promiseall)
+* [Async / Await](#async--await)
+* [Spread operator](#spread-operator-)
+* [Arrow function](#arrow-function)
 
 ## Promise
 ```javascript
@@ -205,10 +213,14 @@ async function f() {
 
 ```javascript
 async function showServiceCost() {
-    let user = await getUser(100);  
-    let services = await getServices(user);
-    let cost = await getServiceCost(services);
-    console.log(`The service cost is ${cost}`); // The service cost is 300
+    try {
+      let user = await getUser(100);  
+      let services = await getServices(user);
+      let cost = await getServiceCost(services);
+      console.log(`The service cost is ${cost}`); // The service cost is 300
+    } catch(error) {
+       console.log(error.message);
+    }
 }
 
 async function getUser(userId) {
