@@ -406,5 +406,41 @@ fn(1, 2);
 * Rest parameter (`...args`) must be at the end of the argument list. 
 
 ## Spread Operator (...)
+```javascript
+const odd = [1,3,5];
+const combined = [2,4,6, ...odd];
+console.log(combined); // [2, 4, 6, 1, 3, 5]
+
+const odd2 = [1,3,5];
+const combined2 = [...odd2, 2,4,6];
+console.log(combined2); // [1, 3, 5, 2, 4, 6]
+
+const odd3 = [1,3,5];
+const combined3 = [2, ...odd3, 4,6];
+console.log(combined3); // [2, 1, 3, 5, 4, 6]
+```
+* Spread operator allows us to spread out elements of an iterable object.
+* Spread operator can be anywhere, not necessary to be at last.
+
+```javascript
+let rivers = ['Nile', 'Ganges', 'Yangte'];
+let moreRivers = ['Danube', 'Amazon'];
+
+rivers.push(...moreRivers);
+console.log(rivers); //["Nile", "Ganges", "Yangte", "Danube", "Amazon"]
+```
+* A better way to use array `push` method with spread operator to improve the readability of code.
+
+```javascript
+let numbers = [1, 2];
+let moreNumbers = [3, 4];
+
+let allNumbers = [...numbers, ...moreNumbers];
+console.log(allNumbers); // [1, 2, 3, 4]
+```
+* Concatenate two or more arrays using spread operator.
+
+## Object spread
 
 ## Arrow function
+
