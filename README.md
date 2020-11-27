@@ -316,6 +316,90 @@ showServiceCost();
 * `async/await` keywords that build on top of Promise.
 * If function returns a Promise, we can place the `awaits` keyword in front of the function call (ex: `let user = await getUser(100);`).
 
+## Object Literal Syntax Extensions
+```javascript
+function createMachine(name, status) {
+    return {
+        name,
+        status
+    };
+}
+
+let obj = createMachine('Jane', 'Active');
+console.log(obj); // {name: "Jane", status: "Active"}
+```
+
+* JavaScript engine assigns the `name` and `status` property values of the `name` and `status` arguments.
+
+## Computed property name
+```javascript
+let prefix = 'pre_';
+
+let obj = {
+    [prefix + 'name']: 'server',
+    [prefix + 'hours']: 10000
+};
+
+console.log(obj); // {pre_hours: 10000, pre_name: "server"}
+```
+* Square brackets (`[]`) allow you to use the string literals and variables as the property names.
+
+## Concise method syntax
+```javascript
+// Prior to ES6
+let server = {
+    name: 'Server',
+    restart: function() {
+        console.log('The' + this.name + ' is restarting...');
+    }
+};
+
+// ES6
+let server = {
+    name: 'Server',
+    restart() {
+        console.log(`The ${this.name} is restarting...`);
+    }
+};
+```
+* Prior to ES6, we need to specify the name and full function definition (`restart: function() {}`).
+* ES6 makes the syntax for making a method of the object literal more succinct by removing the colon (:) and the function keyword (`restart()`).
+
+## Default parameters
+```javascipt
+function add(x=10, y=20) {
+  return x + y;
+}
+
+console.log(add(undefined, undefined)); // 30
+console.log(add()); // 30
+console.log(add(undefined, 5)); // 15
+console.log(add(25)); // 45
+```
+* pass `undefined` values if we want to use default value for first parameter (ex: `add(undefined, 5)`).
+
+## Rest parameters
+```javascript
+function fn(a,b,...args) {
+  console.log("a: "+ a);
+  console.log("b: "+ b);
+  console.log("args: "+ args);
+}
+
+// a: 1
+// b: 2
+// args: [3, 'A', 'B', 'C']
+fn(1, 2, 3, 'A', 'B', 'C');
+
+// a: 1
+// b: 2
+// args: []
+fn(1, 2);
+
+```
+* Rest parameter means the parameter has a prefix of three dots (`...`).
+* Rest parameter (`...args`) must be at the end of the argument list. 
+
 ## Spread Operator (...)
 
 ## Arrow function
