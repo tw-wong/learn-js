@@ -9,6 +9,11 @@
 * [Promise.race](#promiserace)
 * [Promise.all](#promiseall)
 * [Async / Await](#async--await)
+* [Object literal syntax extensions](#object-literal-syntax-extensions)
+* [Computed property name](#computed-property-name)
+* [Concise method syntax](#concise-method-syntax)
+* [Default parameters](#default-parameters)
+* [Rest parameters](#rest-parameters)
 * [Spread operator](#spread-operator-)
 * [Arrow function](#arrow-function)
 
@@ -316,7 +321,7 @@ showServiceCost();
 * `async/await` keywords that build on top of Promise.
 * If function returns a Promise, we can place the `awaits` keyword in front of the function call (ex: `let user = await getUser(100);`).
 
-## Object Literal Syntax Extensions
+## Object literal syntax extensions
 ```javascript
 function createMachine(name, status) {
     return {
