@@ -581,4 +581,48 @@ console.log(person.propertyIsEnumerable('ssn')); // false
 * ES6 provides a method `propertyIsEnumerable()` that determines whether or not a property is `enumerable`.
 
 ## Arrow function
+```javascript'
+// example function that adds 2 numbers (x and y).
+let add = function(x,y) {
+  return x + y;
+}
+console.log(add(10,20)); // 30
 
+// arrow function example 01:
+let add = (x,y) => x + y;
+console.log(add(10,20)); // 30;
+
+// arrow function example 02:
+let add = (x, y) => { return x + y; };
+console.log(add(10,20)); // 30;
+```
+* Example 01: arrow function has one expression `x + y` so it returns the result of the expression.
+* Example 02: use the block syntax, so we need to specify the `return` keyword.
+
+```javascript
+// example function that sort the array.
+let numbers = [4,2,6];
+numbers.sort(function(a,b){ 
+    return b - a; 
+});
+console.log(numbers); // [6,4,2]
+
+// arrow function example 01:
+let numbers = [4,2,6];
+numbers.sort((a,b) => b - a);
+console.log(numbers); // [6,4,2]
+
+########
+
+// example function that only have 1 parameter.
+let names = ['John', 'Mac', 'Peter'];
+let lengths = names.map(function(name){
+  return name.length;
+})
+
+// arrow function example 02:
+let lengths = names.map(name => name.length);
+console.log(lengths);
+```
+* Example 01: Use parentheses `()` if there is more than 1 parameter `(a,b) =>`.
+* Example 02: We can omit the parenthese if there is only 1 parameter `name =>`.
