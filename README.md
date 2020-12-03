@@ -15,6 +15,9 @@
 * [Default parameters](#default-parameters)
 * [Rest parameters](#rest-parameters)
 * [Spread operator](#spread-operator-)
+* [Object spread](#object-spread)
+* [Spread operator vs. Object.assign()](#spread-operator-vs-objectassign)
+* [Enumerable properties](#enumerable-properties)
 * [Arrow function](#arrow-function)
 
 ## Promise
