@@ -623,6 +623,11 @@ let lengths = names.map(function(name){
 // arrow function example 02:
 let lengths = names.map(name => name.length);
 console.log(lengths);
+
+// arrow function example 03:
+let logDoc = () => console.log(window.document);
+logDoc();
 ```
-* Example 01: Use parentheses `()` if there is more than 1 parameter `(a,b) =>`.
+* Example 01: We must use parentheses `()` if there is more than 1 parameter `(a,b) =>`.
 * Example 02: We can omit the parenthese if there is only 1 parameter `name =>`.
+* Example 03: We must use parentheses if there is no parameter `() =>`.
