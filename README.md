@@ -441,6 +441,141 @@ console.log(allNumbers); // [1, 2, 3, 4]
 * Concatenate two or more arrays using spread operator.
 
 ## Object spread
+```javascript
+const circle = {
+    radius: 10
+};
+
+const coloredCircle = {
+    ...circle,
+    color: 'black'
+};
+
+console.log(coloredCircle); //{ color: "black", radius: 10}
+```
+* ES2018 expands the spread operator for an object.
+
+```javascript
+const circle = {
+    radius: 10
+};
+
+const clonedCircle = {...circle};
+
+console.log(clonedCircle); // { radius: 10 }
+```
+* We can use the spread operator to clone the own enumerable properties of an object.
+
+## Spread operator vs. Object.assign()
+```javascript
+class Circle {
+    constructor(radius) {
+        this.radius = radius;
+    }
+    set diameter(value) {
+        this.radius = value / 2;
+        console.log('SET ', value);
+    }
+    get diameter() {
+        return this.radius * 2;
+    }
+}
+
+let circle = new Circle(100);
+
+let cloneCircle1 = Object.assign(circle, {
+    diameter: 200
+});
+
+// Output:
+// SET 200
+```
+
+* `Object.assign()` method triggers the setters method (`set diameter(value)`).
+
+```javascript
+const blueSquare = {
+    length: 100,
+};
+
+// define a property with readonly (writable: false)
+Object.defineProperty(blueSquare, 'color', {
+    value: 'blue',
+    enumerable: true,
+    writable: false
+
+});
+
+// TypeError: Cannot assign to read only property 'color' of object '#<Object>'
+const redSquare = Object.assign(blueSquare, {
+    color: 'red'
+});
+
+############
+const style = {
+    color: 'green'
+};
+
+const greenSquare = {
+    ...blueSquare,
+    ...style
+}; 
+
+console.log(greenSquare); // {color: "green", length: 100}
+```
+* `Object.assign()` will throw error when assigning new value to `readonly` property.
+* But spread operator (...) allow to assign a new value to `readonly` property.
+
+## Enumerable properties
+```javascript
+const person = {
+    firstName: 'John',
+    lastName: 'Doe'
+};
+
+person.age = 25;
+
+for (const key in person) {
+    console.log(key);
+}
+
+// Output:
+// firstName
+// lastName
+// age
+```
+* The `enumerable` attribute determines whether or not a property is accessible using the `for...in` loop or `Object.keys()` method.
+
+
+```javascript
+const person = {
+    firstName: 'John',
+    lastName: 'Doe'
+};
+
+person.age = 25;
+
+Object.defineProperty(person, 'ssn', {
+    enumerable: false,
+    value: '123-456-7890'
+});
+
+for (const key in person) {
+    console.log(key);
+}
+
+// Output:
+// firstName
+// lastName
+// age
+
+console.log(person.propertyIsEnumerable('firstName')); // true
+console.log(person.propertyIsEnumerable('lastName')); // true
+console.log(person.propertyIsEnumerable('age')); // true
+console.log(person.propertyIsEnumerable('ssn')); // false
+```
+* The `ssn` property is created with the `enumerable` flag sets to `false`, therefore it does not show up in the `for...in` loop.
+* ES6 provides a method `propertyIsEnumerable()` that determines whether or not a property is `enumerable`.
 
 ## Arrow function
 
