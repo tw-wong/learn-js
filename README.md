@@ -19,6 +19,7 @@
 * [Spread operator vs. Object.assign()](#spread-operator-vs-objectassign)
 * [Enumerable properties](#enumerable-properties)
 * [Arrow function](#arrow-function)
+* [Destructuring assignment](#destructuring-assignment)
 
 ## Promise
 ```javascript
@@ -631,3 +632,68 @@ logDoc();
 * Example 01: We must use parentheses `()` if there is more than 1 parameter `(a,b) =>`.
 * Example 02: We can omit the parenthese if there is only 1 parameter `name =>`.
 * Example 03: We must use parentheses if there is no parameter `() =>`.
+
+## Destructuring assignment
+```javascript
+// example 01:
+[a, b, ...rest] = [10, 20, 30, 40, 50];
+console.log(a); // 10
+console.log(b); // 20
+console.log(rest); // [30,40,50]
+
+// example 02:
+const [firstElement, secondElement] = list;
+// is equivalent to:
+// const firstElement = list[0];
+// const secondElement = list[1];
+
+
+// example 03 (with default value):
+let a, b;
+
+[a=5, b=7] = [1];
+console.log(a); // 1
+console.log(b); // 7
+
+// example 04 (swapping variables):
+let a = 1;
+let b = 3;
+
+[a, b] = [b, a];
+console.log(a); // 3
+console.log(b); // 1
+
+// example 05 (parsing an array returned from a function):
+function f() {
+  return [1, 2];
+}
+
+let a, b;
+[a, b] = f();
+console.log(a); // 1
+console.log(b); // 2
+
+// example 06 (object destructuring):
+const user = {
+    id: 42,
+    is_verified: true
+};
+
+const {id, is_verified} = user;
+console.log(id); // 42
+console.log(is_verified); // true
+
+// example 07 (object destructuring with different name than the object):
+const o = {p: 42, q: true};
+const {p: foo, q: bar} = o;
+
+console.log(foo); // 42
+console.log(bar); // true
+
+
+// example 08 (assignment without declaration):
+let a, b;
+
+({a, b} = {a: 1, b: 2});
+```
+* Refs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
