@@ -20,6 +20,8 @@
 * [Enumerable properties](#enumerable-properties)
 * [Arrow function](#arrow-function)
 * [Destructuring assignment](#destructuring-assignment)
+* [Nullish coalescing operator](#nullish-coalescing-operator)
+* [Not not operator](#not-not-operator-)
 
 ## Promise
 ```javascript
@@ -697,3 +699,27 @@ let a, b;
 ({a, b} = {a: 1, b: 2});
 ```
 * Refs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+## Nullish coalescing operator
+```javascript
+const name = null ?? 'John';
+console.log(name); // 'John'
+
+const age = undefined ?? 28;
+console.log(age);
+
+const address = '' ?? 'KL';
+console.log(address); // ''
+```
+
+* Detect if the left operand (name, age, address) is `null` or `undefined`.
+
+## Not not operator (!!)
+```javascript
+const isIE8 = !! navigator.userAgent.match(/MSIE 8.0/);
+console.log(isIE8); // returns true or false
+```
+* Convert `truthy` or `falsy` values to `Boolean` type (`true` or `false`).
+
+* Refs: https://stackoverflow.com/questions/784929/what-is-the-not-not-operator-in-javascript
+* Refs: https://love2dev.com/blog/javascript-not-operator/
