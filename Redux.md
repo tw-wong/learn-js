@@ -4,6 +4,7 @@
 * [Data flow diagram](#data-flow-diagram)
 * [State](#state)
 * [Reducer](#reducer)
+    * [Reducer rules](#reducer-rules)
 * [Store](#store)
 * [UI](#ui)
 * [Dispatching Actions](#dispatching-actions)
@@ -56,6 +57,13 @@ function counterReducer(state = initialState, action) {
     ```
 
 * Action type format: "domain/eventName". Ex: `action.type = 'counter/incremented'`.
+
+    ## Reducer rules
+    * Should only calculate the new state value based on the `state` and `action` arguments.
+
+    * Not allowed to modify the existing state. Instead, they must make **immutable** update. You should make copies of the original values, and then you can mutate the copies.
+
+    * Not do any asynchronous logic or other "side effects" (logging, saving a file, Ajax request, generating random numbers or unique random IDs) in `reducer` function. 
 
 ## Store
 
