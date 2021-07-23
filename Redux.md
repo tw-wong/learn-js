@@ -7,6 +7,7 @@
 * [Store](#store)
 * [UI](#ui)
 * [Dispatching Actions](#dispatching-actions)
+* [Selectors](#selectors)
 
 ## Data flow diagram
 ![Redux data flow diagram](https://github.com/tw-wong/learn-js/blob/master/screenshot/redux_data_flow_diagram.gif)
@@ -45,7 +46,16 @@ function counterReducer(state = initialState, action) {
 
 * Action objects (`action`) always have a `type` field, which is a string you provide that acts as a unique name for the action. 
 
-* Action type format: `{type}/{what happened}`. Ex: `action.type = 'counter/incremented'`.
+* Action object can have other fields with additional information about what happened. By convention, we put information in a field called `payload. Ex: 
+
+    ```javascript
+    const addTodoAction = {
+        type: 'todos/todoAdded',
+        payload: 'Buy milk'
+    }    
+    ```
+
+* Action type format: "domain/eventName". Ex: `action.type = 'counter/incremented'`.
 
 ## Store
 
@@ -53,6 +63,12 @@ function counterReducer(state = initialState, action) {
 // Create a new Redux store with the `createStore` function,
 // and use the `counterReducer` for the update logic
 const store = Redux.createStore(counterReducer)
+
+
+
+// Or can create using @reduxjs/toolkit
+import { configureStore } from '@reduxjs/toolkit'
+const store = configureStore({ reducer: counterReducer })
 ```
 
 ## UI
@@ -109,10 +125,25 @@ document
     }, 1000)
   })
 ```
+* `Action` is an event that describes something that happened in the application.
 
 * When user click a button (event), create an `Action` that describes what happened, and `dispatch` them to the `store`.
 
 * Call `store.dispatch(action)` and the `store` runs `reducer`, update the `state`, and runs the `subscribers` to update the UI.
+
+## Selectors
+
+```javascript
+const selectCounterValue = state => state.value
+
+const currentValue = selectCounterValue(store.getState())
+console.log(currentValue)
+```
+
+* `Selectors` are functions that know how to extract specific pieces of information from a store state value. 
+
+* This can help avoid repeating logic as different parts of the app need to read the same data.
+
 
 Refs:
 * https://redux.js.org/tutorials/fundamentals/part-1-overview
