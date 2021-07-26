@@ -51,15 +51,15 @@ function counterReducer(state = initialState, action) {
 
 * It has 2 arguments, the current `state` and `action` object.
 
-* Action objects (`action`) always have a `type` field, which is a string you provide that acts as a unique name for the action. 
+* Action objects (`action`) always have a `type` field, which is a string you provide that acts as a unique name for the action.
 
-* Action object can have other fields with additional information about what happened. By convention, we put information in a field called `payload. Ex: 
+* Action object can have other fields with additional information about what happened. By convention, we put information in a field called `payload. Ex:
 
   ```javascript
   const addTodoAction = {
       type: 'todos/todoAdded',
       payload: 'Buy milk'
-  }    
+  }
   ```
 
 * Action type format: "domain/eventName". Ex: `action.type = 'counter/incremented'`.
@@ -69,7 +69,7 @@ function counterReducer(state = initialState, action) {
 
   * Not allowed to modify the existing state. Instead, they must make **immutable** update. You should make copies of the original values, and then you can mutate the copies.
 
-  * Not do any asynchronous logic or other "side effects" (logging, saving a file, Ajax request, generating random numbers or unique random IDs) in `reducer` function. 
+  * Not do any asynchronous logic or other "side effects" (logging, saving a file, Ajax request, generating random numbers or unique random IDs) in `reducer` function.
 
   ## Splitting Reducers
 
@@ -77,10 +77,10 @@ function counterReducer(state = initialState, action) {
 
     * Before split:
 
-      ```javascript        
+      ```javascript
       //state with multiple sections:
       const initialSate = {
-        todos: [], 
+        todos: [],
         filters: [],
       }
 
@@ -109,7 +109,7 @@ function counterReducer(state = initialState, action) {
       ```
 
     * After split:
-        
+
       ```javascript
         //File: src/features/todos/todosSlice.js
       const initialState = [];
@@ -124,7 +124,7 @@ function counterReducer(state = initialState, action) {
           }
 
           ...
-                          
+
           default:
             return state
         }
@@ -143,7 +143,7 @@ function counterReducer(state = initialState, action) {
           }
 
           ...
-                          
+
           default:
             return state
         }
@@ -203,7 +203,7 @@ store.subscribe(render)
 
 * Get latest state from Redux store using `store.getState()`.
 
-* `store.subscribe()` to pass a subscriber callback function that will be called every time the store is updated. 
+* `store.subscribe()` to pass a subscriber callback function that will be called every time the store is updated.
 
 ## Dispatching Actions
 
@@ -251,7 +251,7 @@ const currentValue = selectCounterValue(store.getState())
 console.log(currentValue)
 ```
 
-* `Selectors` are functions that know how to extract specific pieces of information from a store state value. 
+* `Selectors` are functions that know how to extract specific pieces of information from a store state value.
 
 * This can help avoid repeating logic as different parts of the app need to read the same data.
 
@@ -280,127 +280,132 @@ console.log(currentValue)
     ...
 
     const rootReducer = combineReducers({
-      aaa: aaaReducer, 
-      bbb: bbbReducer, 
+      aaa: aaaReducer,
+      bbb: bbbReducer,
     })
     const store = createStore(rootReducer, applyMiddleware(logger))
     ```
 
 ## Async Actions
 
+![Async actions diagram](https://github.com/tw-wong/learn-js/blob/master/screenshot/async_actions_diagram.gif)
+
 * Use case: Async API call to fetch data from an end point and use that data in the application.
 
 * To create async action creators, we need third-party extensions:
-    * `axios`: 
+    * `axios`:
       * Request to an API endpoint.
 
-    * `redux-thunk`: 
+    * `redux-thunk`:
       * Define async action creators.
       * Act as middleware.
+      * The thunk middleware allows us to write functions that get `dispatch` and `getState` as arguments.
 
     * Installation:
-        
+
       ```sh
       ~ npm install axios redux-thunk
       ```
 
-```javascript
+* Implementation:
+  ```javascript
 
-const applyMiddleware = redux.applyMiddleware
-const thunkMiddleware = require('redux-thunk').default
-const axios = require('axios')
+  const applyMiddleware = redux.applyMiddleware
+  const thunkMiddleware = require('redux-thunk').default
+  const axios = require('axios')
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_USER_REQUEST:
-      return { 
-        ...state, 
-        loading: true
-      }
+  const reducer = (state = initialState, action) => {
+    switch (action.type) {
+      case FETCH_USER_REQUEST:
+        return {
+          ...state,
+          loading: true
+        }
 
-    case FETCH_USER_SUCCESS:
-      return { 
-        loading: false,
-        users: action.payload, 
-        error: ''
-      }
+      case FETCH_USER_SUCCESS:
+        return {
+          loading: false,
+          users: action.payload,
+          error: ''
+        }
 
-    case FETCH_USER_FAILURE:
-      return { 
-        loading: false,
-        users: [], 
-        error: action.payload
-      }
+      case FETCH_USER_FAILURE:
+        return {
+          loading: false,
+          users: [],
+          error: action.payload
+        }
 
-    default:
-      return state
+      default:
+        return state
+    }
   }
-}
 
-// Define initial state
-const initialState = {
-  loading: false, 
-  users: [], 
-  error: ''
-}
-
-// Define actions
-const fetchUsersRequest = () => {
-  return {
-    type: FETCH_USER_REQUEST
+  // Define initial state
+  const initialState = {
+    loading: false,
+    users: [],
+    error: ''
   }
-}
 
-const fetchUsersSuccess = users => {
-  return {
-    type: FETCH_USER_SUCCESS, 
-    payload: users
+  // Define actions
+  const fetchUsersRequest = () => {
+    return {
+      type: FETCH_USER_REQUEST
+    }
   }
-}
 
-const fetchUsersFailure = error => {
-  return {
-    type: FETCH_USER_FAILURE, 
-    payload: error
+  const fetchUsersSuccess = users => {
+    return {
+      type: FETCH_USER_SUCCESS,
+      payload: users
+    }
   }
-}
 
-// Async action creators, return as a function.
-const fetchUsers = () => {
-  return function(dispatch) {
-
-    //dispatch action: set loading to true before async request.
-    dispatch(fetchUsersRequest())
-
-    axios.get('https://jsonplaceholder.typicode.com/users')
-    .then(response => {
-      //response.data is the array of users.
-
-      //only return user id
-      const users = response.data.map(user => user.id)
-
-      //dispatch action: update users state data.
-      dispatch(fetchUsersSuccess(users))
-    })
-    .catch(error => {
-      //error.message is the error description.
-
-      //dispatch action: failed to fetch users data
-      dispatch(fetchUsersFailure(error.message))
-    })
+  const fetchUsersFailure = error => {
+    return {
+      type: FETCH_USER_FAILURE,
+      payload: error
+    }
   }
-}
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+  // Async action creators, return as a function.
+  const fetchUsers = (dispatch, getState) => {
+    return function(dispatch) {
 
-//for debugging purpose: output the state
-const store.subscribe(() => {
-  console.log(store.getState())
-})
+      //dispatch action: set loading to true before async request.
+      dispatch(fetchUsersRequest())
 
-//trigger the fetch user async action
-const store.dispatch(fetchUsers)
-```
+      axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        //response.data is the array of users.
+
+        //only return user id
+        const users = response.data.map(user => user.id)
+
+        //dispatch action: update users state data.
+        dispatch(fetchUsersSuccess(users))
+      })
+      .catch(error => {
+        //error.message is the error description.
+
+        //dispatch action: failed to fetch users data
+        dispatch(fetchUsersFailure(error.message))
+      })
+    }
+  }
+
+  // The store now has the ability to accept thunk functions in `dispatch`
+  const store = createStore(reducer, applyMiddleware(thunkMiddleware))
+
+  //for debugging purpose: output the state
+  const store.subscribe(() => {
+    console.log(store.getState())
+  })
+
+  //trigger the fetch user async action
+  const store.dispatch(fetchUsers)
+  ```
 
 ## React Redux
 // TODO
