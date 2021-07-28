@@ -13,8 +13,8 @@
 * [Selectors](#selectors)
 * [Middleware](#middleware)
 * [Async Actions](#async-actions)
-* [React Redux](#react-redux)
-* [React Redux with Hooks](#react-redux-with-hooks)
+* [React Redux in class component](#react-redux-in-class-component)
+* [React Redux in functional component](#react-redux-in-functional-component)
 
 ## Data flow diagram
 ![Redux data flow diagram](https://github.com/tw-wong/learn-js/blob/master/screenshot/redux_data_flow_diagram.gif)
@@ -371,7 +371,7 @@ console.log(currentValue)
 
   // Async action creators, return as a function.
   const fetchUsers = (dispatch, getState) => {
-    return function(dispatch) {
+    return (dispatch) => {
 
       //dispatch action: set loading to true before async request.
       dispatch(fetchUsersRequest())
@@ -407,10 +407,35 @@ console.log(currentValue)
   const store.dispatch(fetchUsers)
   ```
 
-## React Redux
-// TODO
-## React Redux with Hooks
-// TODO
+## React Redux in class component
+
+* General rule:
+
+  * Use `<Provider />` component to wrap the entire application and pass the `store` down to all children.
+
+  * Individual reducers are combined into a single `rootReducer` to create the discrete properties of the state.
+
+* Class component:
+
+  * `mapStateToProps`: Map Redux store state to component props.
+
+  * `mapDispatchToProps`: Map dispatch action to component props.
+
+  * `connect`: Read or re-read (when store updates) the value from Redux store.
+
+* Sample code:
+  * https://github.com/tw-wong/learn-react-redux (BookingClassComponent.js)
+## React Redux in functional component
+
+* Functional component:
+
+  * `useSelector`: Extract data from the Redux store state.
+
+  * `useDispatch`: Returns a reference to the dispatch function from the Redux store.
+
+* Sample code:
+
+  * https://github.com/tw-wong/learn-react-redux (BookingFunctionalComponent.js)
 
 Refs:
 * https://redux.js.org/tutorials/fundamentals/part-1-overview
