@@ -10,6 +10,9 @@ Static type checker for Javascript.
 * [Function parameters with defaults](#function-parameters-with-defaults)
 * [Literal Types](#literal-types)
 * [Mixed Types](#mixed-types)
+* [Type in Array](#type-in-array)
+* [Type in Object](#type-in-object)
+* [Type in Function](#type-in-function)
 
 ## Primitive Types
 
@@ -176,3 +179,52 @@ function identity<T>(value: T): T {
 * Type based on another type (Generic Types).
 
 * The return type will be the same as the type of whatever value is passed into (`value: T`) the function.
+
+## Type in Array
+
+```javascript
+let myArray: Array<string>;
+myArray = ["a", "b", "c"];    // Works!
+myArray = ["a", "b", "c", 1]; // Errors!
+
+// Mixed with 2 different types
+let myArray2: Array<string | boolean>;
+myArray = ["a", "b", "c", true]; // Works!
+
+// Another way of defining the type.
+// Same as:
+// let myArray3: Array<number>;
+let myArray3: number[];
+```
+
+## Type in Object
+
+```javascript
+let myObject: {price: number, title: string};
+myObject = {
+  price: 10,       // Works!
+  title: "Phone",  // Works!
+  brand: "Android" // Works! Although no type has defined.
+}
+
+// Strict mode
+let myObject2: {|price: number, title: string|};
+myObject = {
+  price: 10,       // Works!
+  title: "Phone",  // Works!
+  brand: "Android" // Error! Because the type is not defined.
+}
+```
+
+## Type in Function
+```javascript
+// Function with return.
+function myFunction(a: number): number {
+  return a * a;
+}
+
+// Function without return.
+function myFunction2(a: string): void {
+  console.log(a);
+}
+```
