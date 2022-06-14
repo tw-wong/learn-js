@@ -79,6 +79,7 @@ let obj:Person = {
   age: 45,
 }
 
+
 // use as array
 interface Person {
   name:string,
@@ -95,6 +96,7 @@ let arr:Person[] = [
     age: 77
   },
 ]
+
 
 // interface with function
 interface IEmployee {
