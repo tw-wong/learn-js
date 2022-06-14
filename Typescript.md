@@ -103,7 +103,7 @@ interface IEmployee {
   empCode: number;
   empName: string;
   getSalary: (num: number) => number;
-  getManagerName(num: number): string;
+  getManagerName: (num: number) => string;
 }
 
 let emp: IEmployee = {
