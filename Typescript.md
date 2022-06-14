@@ -11,8 +11,11 @@
 * [Any](#any)
 * [Custom type](#custom-type)
 * [Tuple](#tuple)
+* [Enum](#enum)
 * [Void](#void)
 * [Never](#never)
+* [Any](#any)
+* [Unknown](#unknown)
 
 ## Setup
 
@@ -261,6 +264,51 @@ Note:
 
 - `Tuple` can contain two or more values of different data types.
 
+## Enum
+
+```js
+// Numeric enum
+enum PrintMedia {
+  Newspaper,
+  Newsletter,
+  Magazine,
+  Book
+}
+
+console.log(PrintMedia.Newspaper); // 0
+console.log(PrintMedia.Newsletter); // 1
+console.log(PrintMedia[0]); // Newspaper
+console.log(PrintMedia[1]); // Newsletter
+
+
+
+// String enum
+enum PrintMedia {
+  Newspaper = "NEWSPAPER",
+  Newsletter = "NEWSLETTER",
+  Magazine = "MAGAZINE",
+  Book = "BOOK",
+}
+
+console.log(PrintMedia.Newspaper);     // NEWSPAPER
+console.log(PrintMedia.Newsletter);    // NEWSLETTER
+console.log(PrintMedia["Newsletter"]); // NEWSLETTER
+
+// Heterogeneous enum
+enum Status {
+  Active = 'ACTIVE',
+  Deactivate = 1,
+  Pending
+}
+
+console.log(Status.Active); // ACTIVE
+console.log(Status.Deactivate); // 1
+console.log(Status.Pending); // 2
+
+console.log(Status["Deactivate"]); // 1
+console.log(Status[2]); // Pending
+```
+
 ## Void
 
 ```js
@@ -311,6 +359,55 @@ Note:
 - Use case:
   - We can purposely assign value to `never` type at `else` conditions, in case someone has updated the `Foo` type (ex: add new `boolean` type) but forgot to update the `controlFlowAnalysisWithNever` logic.
   - Typescript will detect the error.
+
+## Any
+
+```js
+let a: any = 666;
+a = "Semlinker";
+a = false;
+a = 66;
+a = undefined;
+a = null;
+a = [];
+a = {};
+
+// default type is `any`, if there is no type specified
+let something;
+something = 'seven';
+something = 7;
+```
+
+Note:
+
+- A variable with `any` type can be reassigned to any different type.
+- The `any` type will be treated as the default type, if no type is specified.
+
+
+## Unknown
+
+```js
+let anything: any = 10;
+let notSure: unknown = 10;
+
+let d1: number = anything; // OK
+// let d2: number = notSure; // Error
+
+let resultAnything: any = notSure; // OK
+let resultNotSure: unknown = anything; // OK
+```
+
+Note:
+- Difference between `any` and `unknown`:
+  - The `any` type:
+    - Assign `any` value to `unknown` variable: OK.
+    - Assign `any` value to `string` variable: OK.
+    - Assign `any` value to `boolean` variable: OK.
+  - The `unknown` type:
+    - Assign `unknown` value to `any` variable: OK.
+    - Assign `unknown` value to `string` variable: NG.
+    - Assign `unknown` value to `boolean` variable: NG.
+
 
 Refs:
 - https://juejin.cn/post/7018805943710253086
