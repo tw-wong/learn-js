@@ -73,12 +73,18 @@ Note:
 ## Interface
 
 ```js
+// use as single object
+let obj:Person = {
+  name: 'Amy',
+  age: 45,
+}
+
+// use as array
 interface Person {
   name:string,
   age:number
 }
 
-// use as array
 let arr:Person[] = [
   {
     name: 'Alice',
@@ -90,11 +96,27 @@ let arr:Person[] = [
   },
 ]
 
-// use as single object
-let obj:Person = {
-  name: 'Amy',
-  age: 45,
+// interface with function
+interface IEmployee {
+  empCode: number;
+  empName: string;
+  getSalary: (num: number) => number;
+  getManagerName(num: number): string;
 }
+
+let emp: IEmployee = {
+  empCode: 123,
+  empName: "Emp name",
+  getSalary: (num: number): number => {
+    return num + 2;
+  },
+  getManagerName: (num: number): string => {
+    return num + 'abc';
+  },
+}
+
+console.log(emp.getSalary(1)); // 3
+console.log(emp.getManagerName(11)); // 11abc
 ```
 
 ## Interface as function type
