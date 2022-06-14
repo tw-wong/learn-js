@@ -10,7 +10,7 @@
 * [Function](#function)
 * [Any](#any)
 * [Custom type](#custom-type)
-* [Array constraint item type](#array-constraint-item-type)
+* [Tuple](#tuple)
 
 ## Setup
 
@@ -201,9 +201,8 @@ console.log(add('a', 'b')); // ab
 console.log(add('a', 123)); // a123
 ```
 
-## Array constraint item type
+## Tuple
 ```js
-// array and must contains 2 items
 let x: [string, number];
 
 // x = ['hello', 'world']; // Error
@@ -211,9 +210,54 @@ let x: [string, number];
 // x = [10, 'hello'];      // Error
 // x = [123, 'hello'];     // Error
 x = ['hello', 123];        // OK
-
 console.log(x);
+
+
+const employee: [number, string] = [1, "Steve"];
+
+// access Tuple (method 1)
+employee[0]; // 1
+employee[1]; // Steve
+
+// access Tuple (method 2)
+const [id, username] = employee;
+
+console.log(employee); // [1, "Steve"]
+console.log(id); // 1
+console.log(username); // Steve
+
+// Optional Tuple
+type Point = [number, number?, number?];
+
+const x: Point = [10];
+const xy: Point = [10, 20];
+const xyz: Point = [10, 20, 10];
+
+console.log(x.length); // 1
+console.log(xy.length); // 2
+console.log(xyz.length); // 3
+
+console.log(x[0]); // 10
+console.log(x[1]); // undefined
+
+
+// Tuple object contains 1 number and n (0 or more) string
+type RestTupleType = [number, ...string[]];
+let restTuple: RestTupleType = [666, "Semlinker", "Kakuqo", "Lolo"];
+console.log(restTuple[0]); // 666
+console.log(restTuple[1]); // Semlinker
+
+
+// Readonly Tuple
+const point: readonly [number, number] = [10, 20];
+
+console.log(point[0]); // OK. 10
+point[0] = 1;          // Error. Cannot assign to '0' because it is a read-only property
 ```
+
+Note:
+
+- `Tuple` can contain two or more values of different data types.
 
 Refs:
 - https://juejin.cn/post/7018805943710253086
