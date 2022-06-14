@@ -67,7 +67,7 @@ let arr:(number | string)[] = [1, 'b', 2, 'c'];
 
 Note:
   - 2 ways to define a type for an array.
-  - Use `|` to define mixed types.
+  - Use `|` to define mixed types (union).
 
 
 ## Interface
@@ -411,3 +411,4 @@ Note:
 
 Refs:
 - https://juejin.cn/post/7018805943710253086
+- https://www.tutorialsteacher.com/typescript
