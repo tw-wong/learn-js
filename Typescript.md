@@ -281,7 +281,6 @@ console.log(PrintMedia[0]); // Newspaper
 console.log(PrintMedia[1]); // Newsletter
 
 
-
 // String enum
 enum PrintMedia {
   Newspaper = "NEWSPAPER",
@@ -293,6 +292,7 @@ enum PrintMedia {
 console.log(PrintMedia.Newspaper);     // NEWSPAPER
 console.log(PrintMedia.Newsletter);    // NEWSLETTER
 console.log(PrintMedia["Newsletter"]); // NEWSLETTER
+
 
 // Heterogeneous enum
 enum Status {
