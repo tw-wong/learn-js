@@ -98,27 +98,32 @@ let arr:Person[] = [
 ]
 
 
-// interface with function
+// interface with method
 interface IEmployee {
   empCode: number;
   empName: string;
   getSalary: (num: number) => number;
   getManagerName: (num: number) => string;
+  getNickName: (name: string) => string;
 }
 
 let emp: IEmployee = {
   empCode: 123,
   empName: "Emp name",
-  getSalary: (num: number): number => {
+  getSalary: (num) => {
     return num + 2;
   },
-  getManagerName: (num: number): string => {
+  getManagerName: (num) => {
     return num + 'abc';
   },
+  getNickName: (str) => {
+    return str;
+  }
 }
 
 console.log(emp.getSalary(1)); // 3
 console.log(emp.getManagerName(11)); // 11abc
+console.log(emp.getNickName("Amy")); // Amy
 ```
 
 ## Interface as function type
