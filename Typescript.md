@@ -11,6 +11,8 @@
 * [Any](#any)
 * [Custom type](#custom-type)
 * [Tuple](#tuple)
+* [Void](#void)
+* [Never](#never)
 
 ## Setup
 
@@ -258,6 +260,57 @@ point[0] = 1;          // Error. Cannot assign to '0' because it is a read-only 
 Note:
 
 - `Tuple` can contain two or more values of different data types.
+
+## Void
+
+```js
+// function without return
+function fun(): void {
+  console.log("this is TypeScript");
+};
+```
+
+Note:
+- Only `undefined` or `null` (if `strictNullChecks = false`) is assignable to variable with `void` type.
+
+
+## Never
+
+```js
+function throwError(errorMsg: string): never {
+  throw new Error(errorMsg);
+}
+
+function keepProcessing(): never {
+  while (true) {
+    console.log('I always does something and never ends.')
+  }
+}
+
+// use case
+type Foo = string | number;
+
+function controlFlowAnalysisWithNever(foo: Foo) {
+  if (typeof foo === "string") {
+    // string logic goes here
+  } else if (typeof foo === "number") {
+    // number logic goes here
+  } else {
+    // purposely assign value to check type variable
+    const check: never = foo;
+  }
+}
+```
+
+Note:
+
+- The `never` type is used when you are sure that something is never going to occur.
+- Difference between `never` and `void`:
+  - The `void` type can have `undefined` or `null` as a value
+  - The `never` cannot have any value.
+- Use case:
+  - We can purposely assign value to `never` type at `else` conditions, in case someone has updated the `Foo` type (ex: add new `boolean` type) but forgot to update the `controlFlowAnalysisWithNever` logic.
+  - Typescript will detect the error.
 
 Refs:
 - https://juejin.cn/post/7018805943710253086
