@@ -1,5 +1,5 @@
 # learn-js
- Some useful information related with js. 
+ Some useful information related with js.
 
 ## Overview
 * [Promise](#promise)
@@ -22,6 +22,7 @@
 * [Destructuring assignment](#destructuring-assignment)
 * [Nullish coalescing operator](#nullish-coalescing-operator)
 * [Not not operator](#not-not-operator-)
+* [Set](#set)
 
 ## Promise
 ```javascript
@@ -61,7 +62,7 @@ promise.then(
 
 let promise = new Promise(function(resolve, reject) {
   // after 1 seconds, this job is done with an error.
-  
+
   setTimeout(() => reject(new Error("Whoops!")), 1000);
 });
 
@@ -94,7 +95,7 @@ let promise = new Promise(function(resolve, reject) {
 promise
   .finally(() => alert('show before .then')) //show first.
   .then(result => alert(result)) //show after.
-  .catch(error => alert(error));  //doesn't run.  
+  .catch(error => alert(error));  //doesn't run.
 ```
 
 * `.finally` will call before `.then`.
@@ -284,7 +285,7 @@ async function f() {
 ```javascript
 async function showServiceCost() {
     try {
-      let user = await getUser(100);  
+      let user = await getUser(100);
       let services = await getServices(user);
       let cost = await getServiceCost(services);
       console.log(`The service cost is ${cost}`); // The service cost is 300
@@ -295,10 +296,10 @@ async function showServiceCost() {
 
 async function getUser(userId) {
   console.log('Get user from the database.');
-  
+
   return new Promise((resolve, reject) => {
   	setTimeout(() => resolve({
-    	userId: userId, 
+      userId: userId,
       username: 'John'
     }), 1000)
   });
@@ -306,7 +307,7 @@ async function getUser(userId) {
 
 async function getServices(user) {
   console.log(`Get services of ${user.username} from the API.`);
-  
+
   return new Promise((resolve, reject) => {
   	setTimeout(() => resolve([
       'Email', 'VPN', 'CDN'
@@ -316,7 +317,7 @@ async function getServices(user) {
 
 async function getServiceCost(services) {
   console.log(`Calculate service costs of ${services}.`);
-  
+
   return new Promise((resolve, reject) => {
   	setTimeout(() => resolve(services.length * 100), 1000)
   });
@@ -409,7 +410,7 @@ fn(1, 2);
 
 ```
 * Rest parameter means the parameter has a prefix of three dots (`...`).
-* Rest parameter (`...args`) must be at the end of the argument list. 
+* Rest parameter (`...args`) must be at the end of the argument list.
 
 ## Spread Operator (...)
 ```javascript
@@ -525,7 +526,7 @@ const style = {
 const greenSquare = {
     ...blueSquare,
     ...style
-}; 
+};
 
 console.log(greenSquare); // {color: "green", length: 100}
 ```
@@ -605,8 +606,8 @@ console.log(add(10,20)); // 30;
 ```javascript
 // example function that sort the array.
 let numbers = [4,2,6];
-numbers.sort(function(a,b){ 
-    return b - a; 
+numbers.sort(function(a,b){
+    return b - a;
 });
 console.log(numbers); // [6,4,2]
 
@@ -723,3 +724,54 @@ console.log(isIE8); // returns true or false
 
 * Refs: https://stackoverflow.com/questions/784929/what-is-the-not-not-operator-in-javascript
 * Refs: https://love2dev.com/blog/javascript-not-operator/
+
+
+## Set
+```javascript
+const arr = [
+  {
+    id: "123",
+    parent_id: "123",
+    accessed_at: "2022-06-09 23:59:59",
+    title: "item 01",
+  },
+  {
+    id: "124",
+    parent_id: "123",
+    accessed_at: "2022-06-10 23:59:59",
+    title: "item 02",
+  },
+  {
+    id: "125",
+    parent_id: "123",
+    title: "item 03",
+  },
+  {
+    id: "126",
+    parent_id: "126",
+    accessed_at: "2022-06-11 23:59:59",
+    title: "item 06",
+  },
+  {
+    id: "127",
+    parent_id: "126",
+    title: "item 07",
+  },
+  {
+    id: "128",
+    parent_id: "128",
+    title: "item 08",
+  },
+  {
+    id: "129",
+    title: "item 09",
+  },
+];
+
+// Create new set of array (value is parent_id), if the item property of "accessed_at" is not empty.
+// Expected result:
+// const result = ["123", "126"]
+const result = [...new Set(arr.filter(item => item.accessed_at).map(item => item.parent_id))];
+```
+
+* The `Set` object lets you store unique values of any type, whether primitive values or object references.
