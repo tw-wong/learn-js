@@ -10,6 +10,7 @@ Static type checker for Javascript.
 * [Function parameters with defaults](#function-parameters-with-defaults)
 * [Literal Types](#literal-types)
 * [Mixed Types](#mixed-types)
+* [Any Types](#any-types)
 * [Type in Array](#type-in-array)
 * [Type in Object](#type-in-object)
 * [Type in Function](#type-in-function)
@@ -179,6 +180,37 @@ function identity<T>(value: T): T {
 * Type based on another type (Generic Types).
 
 * The return type will be the same as the type of whatever value is passed into (`value: T`) the function.
+
+```javascript
+function getTypeOf(value: mixed): string {
+  return typeof value;
+}
+```
+
+* An arbitrary type that could be anything.
+
+* `mixed` will accept any type of value. Strings, numbers, objects, functions– anything will work.
+
+* When using value of `mixed` type, we must first figure out what the actual type is then only apply the logic.
+
+  ```javascript
+  function testing(value: mixed) {
+    if (typeof value === 'string') { // when type is string
+      return "" + value;  // use value of `mixed` type.
+    } else if (typeof value === 'number') { // when type is number
+      return 2 + value; // use value of `mixed` type.
+    }
+    else { // when type is unknown
+      return value;
+    }
+  }
+  ```
+
+## Any Types
+
+* Using `any` is completely unsafe, and should be avoided whenever possible.
+* Consider using it when converting existing code to using Flow types and currently being blocked by code type checked.
+* Consider using it when you are certain and your code works and for some reason Flow is unable to type check it correctly.
 
 ## Type in Array
 
