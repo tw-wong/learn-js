@@ -4,6 +4,7 @@
 * [Setup](#setup)
 * [Types](#types)
 * [Array](#array)
+* [Mixed types](#mixed-types)
 * [Interface](#interface)
 * [Interface as function type](#interface-as-function-type)
 * [Interface for array type](#interface-for-array-type)
@@ -69,6 +70,22 @@ Note:
   - 2 ways to define a type for an array.
   - Use `|` to define mixed types (union).
 
+## Mixed types
+
+```js
+// String
+let test: string|number;
+test = 'Hello'; // OK
+test = 25; // OK
+test = false; // NG
+
+// Array
+let arr: (string|number)[] = [];
+arr.push('hello'); // OK
+arr.push(12); // OK
+arr.push(false); // NG
+
+```
 
 ## Interface
 
