@@ -5,6 +5,10 @@
 * [Types](#types)
 * [Array](#array)
 * [Mixed types](#mixed-types)
+* [Non-null assertion](#non-null-assertion)
+* [Casting](#casting)
+* [Class](#class)
+* [Public, Private & Readonly](#public-private--readonly)
 * [Interface](#interface)
 * [Interface as function type](#interface-as-function-type)
 * [Interface for array type](#interface-for-array-type)
@@ -86,6 +90,98 @@ arr.push(12); // OK
 arr.push(false); // NG
 
 ```
+
+## Non-null assertion
+
+```js
+let word : string | null = null
+const num = 1
+if (num) {
+    word = "Hello World"
+}
+
+// console.log(word.toLowerCase()) // Error: Object is possibly 'null'.ts(2531)
+
+console.log(word!.toLowerCase())
+```
+
+Note:
+
+- Use `!` to tell TypeScript we are certain word will never be null (or undefined).
+
+## Casting
+
+```js
+
+// Use css selector and cast the variable as HTML form element.
+const form = document.querySelector('.new-item-form') as HTMLFormElement;
+
+console.log(form.children);
+```
+
+## Class
+
+```js
+class Invoice {
+  client: string,
+  info: string,
+  amount: number,
+
+  constructor(client: string, info: string, amount: number) {
+    this.client = client;
+    this.info = info;
+    this.amount = amount;
+  }
+}
+
+const invoiceOne = new Invoice('Ali', 'work on site A', 20);
+
+```
+
+## Public, Private & Readonly
+
+```js
+// method one
+class Invoice {
+  readonly client: string,
+  private info: string,
+  public amount: number,
+
+  constructor(client: string, info: string, amount: number) {
+    this.client = client;
+    this.info = info;
+    this.amount = amount;
+  }
+
+  format() {
+    return `${this.client} owes USD${this.amount} for ${this.info}`
+  }
+}
+
+// method two
+class Invoice {
+  constructor(
+    readonly client: string,
+    private info: string,
+    public amount: number,
+  ){}
+
+  format() {
+    return `${this.client} owes USD${this.amount} for ${this.info}`
+  }
+}
+
+const invoiceOne = new Invoice('Ali', 'work on site A', 20);
+```
+
+Note:
+
+- `readonly`: it can be accessed outside the class, but their value cannot be changed.
+
+- `private`: it cannot be accessed from outside of its containing class.
+
+- `public`: default modifiers. it can be freely accessed inside or outside the class.
+
 
 ## Interface
 
