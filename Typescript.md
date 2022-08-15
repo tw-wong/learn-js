@@ -9,12 +9,16 @@
 * [Casting](#casting)
 * [Class](#class)
 * [Public, Private & Readonly](#public-private--readonly)
+* [Protected](#protected)
+* [Static](#static)
+* [Abstract class](#abstract-class)
 * [Interface](#interface)
 * [Interface as function type](#interface-as-function-type)
 * [Interface for array type](#interface-for-array-type)
 * [Function](#function)
 * [Any](#any)
 * [Custom type](#custom-type)
+* [Generics](#generics)
 * [Tuple](#tuple)
 * [Enum](#enum)
 * [Void](#void)
@@ -182,6 +186,73 @@ Note:
 
 - `public`: default modifiers. it can be freely accessed inside or outside the class.
 
+## Protected
+
+```js
+class Greeter {
+  public greet() {
+    console.log("Hello, " + this.getName());
+  }
+  protected getName() {
+    return "hi";
+  }
+}
+
+class SpecialGreeter extends Greeter {
+  public howdy() {
+    // OK to access protected member here
+    console.log("Howdy, " + this.getName());
+  }
+}
+const g = new SpecialGreeter();
+g.greet(); // Hello, hi
+g.howdy(); // Howdy, hi
+
+// g.getName(); // Property 'getName' is protected and only accessible within class 'Greeter' and its subclasses.ts(2445)
+```
+
+Note:
+
+- `protected `members are only visible to subclasses of the class they’re declared in.
+
+## Static
+
+```js
+class MyClass {
+  private static x = 10;
+  public static print = () => {
+    return MyClass.x;
+  }
+}
+
+// console.log(MyClass.x); // Property 'x' is private and only accessible within class 'MyClass'.ts(2341)
+console.log(MyClass.print()) // 10
+```
+
+## Abstract class
+
+```js
+abstract class Base {
+  abstract getName(): string;
+
+  printName() {
+    console.log("Hello, " + this.getName());
+  }
+}
+
+class Derived extends Base {
+  getName() {
+    return "world";
+  }
+}
+
+// cannot be directly instantiated
+// const b = new Base();
+
+const d = new Derived();
+d.printName(); // Hello, world
+```
+
 
 ## Interface
 
@@ -346,6 +417,76 @@ function add(a: Combinable, b: Combinable) {
 
 console.log(add('a', 'b')); // ab
 console.log(add('a', 123)); // a123
+```
+
+## Generics
+
+```js
+// Example 1:
+const addUID = <T>(obj: T) => {
+  let uid = Math.floor(Math.random() * 100);
+  return {...obj, uid};
+}
+
+let docOne = addUID({name: 'Hello', age: 30});
+console.log(docOne); // { name: 'Hello', age: 30, uid: 54 }
+
+
+// Example 2:
+// only allow object with name property
+const addUID = <T extends {name: string}>(obj: T) => {
+  let uid = Math.floor(Math.random() * 100);
+  return {...obj, uid};
+}
+
+let docOne = addUID({name: 'Hello', age: 30});
+console.log(docOne); // { name: 'Hello', age: 30, uid: 54 }
+
+// Example 3:
+// interface with dynamic type
+interface Resource<T> {
+  uid: number,
+  name: string,
+  data: T,
+}
+
+// data type is string array
+const docThree: Resource<string[]> = {
+  uid: 100,
+  name: 'Hello',
+  data: ['aa', 'bb'],
+}
+
+// data type is number
+const docFour: Resource<number> = {
+  uid: 100,
+  name: 'Hello',
+  data: 5566,
+}
+
+// Example 4:
+function simpleState<T>(initial: T): [() => T, (v: T) => void] {
+  let val: T = initial;
+  return [
+    () => val,
+    (v: T) => {
+      val = v;
+    }
+  ]
+}
+
+// overriding inferred generic type, either number or null.
+const [strGetter, strSetter] = simpleState<string | null>(null);
+console.log(strGetter()); // null
+
+strSetter('hi');
+console.log(strGetter()); // hi
+
+// Error: Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+// strSetter(20);
+
+strSetter(null);
+console.log(strGetter()); // null
 ```
 
 ## Tuple
