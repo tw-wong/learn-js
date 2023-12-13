@@ -9,6 +9,9 @@
 * [Casting](#casting)
 * [Class](#class)
 * [Public, Private & Readonly](#public-private--readonly)
+* [Omit](#omit)
+* [Typeof](#typeof)
+* [Extend type](#extend-type)
 * [Protected](#protected)
 * [Static](#static)
 * [Abstract class](#abstract-class)
@@ -185,6 +188,50 @@ Note:
 - `private`: it cannot be accessed from outside of its containing class.
 
 - `public`: default modifiers. it can be freely accessed inside or outside the class.
+
+
+
+## Omit
+
+```js
+type UserProps = {
+  name: string;
+  age: number;
+  createdAt: Date;
+}
+
+# remove name, age
+type GuestProps = Omit<UserProps, "name" | "age">
+```
+
+## Typeof
+
+```js
+const project = {
+  title: "Project 1",
+  specification: {
+    size: 10,
+    room: 20
+  }
+}
+
+# extracting type from something else
+type Specification = typeof project["specification"];
+```
+
+## Extend type
+
+```js
+type User {
+  name: string;
+  age: number;
+}
+
+# extend `User` type
+type User2 = User & {
+  role: string
+}
+```
 
 ## Protected
 
