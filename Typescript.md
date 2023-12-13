@@ -701,9 +701,9 @@ const getErrorMessage = (error: unknown): string => {
     message = error.message;
   }
   else if (error && typeof error === "object" && "message" in error){
-    message = String(error.message)
+    message = String(error.message);
   }
-  else if (typeof error === "string){
+  else if (typeof error === "string"){
     message = error;
   }
   else {
