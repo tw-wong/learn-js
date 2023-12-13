@@ -692,6 +692,42 @@ Note:
     - Assign `unknown` value to `boolean` variable: NG.
 
 
+Another example of using `Unknown` type to handle api error response:
+
+```js
+const getErrorMessage = (error: unknown): string => {
+  let message;
+  if (error instanceof Error){
+    message = error.message;
+  }
+  else if (error && typeof error === "object" && "message" in error){
+    message = String(error.message)
+  }
+  else if (typeof error === "string){
+    message = error;
+  }
+  else {
+    message = "unknown error";
+  }
+}
+
+export const sendEmail = async() => {
+  try {
+    await resend.emails.send({
+      from: 'Contact form <admin@local.com>',
+      to: 'test@local.com',
+      subject: 'Message from contact form',
+      html: '<p>Hello</p>'
+    })
+  } catch (error: unknown) {
+    return {
+      message: getErrorMessage(error)
+    }
+  }
+}
+```
+
 Refs:
 - https://juejin.cn/post/7018805943710253086
 - https://www.tutorialsteacher.com/typescript
+- https://www.youtube.com/watch?v=-bmNkTqvYfQ
